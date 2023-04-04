@@ -8,6 +8,6 @@
 
 <body>
     <H1>module #2. REST API basic</H1>
-    <a href="/hello">Say Hello!</a>
+    <a href="${pageContext.request.contextPath}/hello">Say Hello!</a>
 </body>
 </html>
