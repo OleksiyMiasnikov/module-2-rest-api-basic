@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>All tags</title>
+</head>
+
+<body>
+    <H1>1</H1>
+    <div th:each="tag : ${tags}">
+        <a th:href="@{/tags/{id}(id = ${tag.getId()})}" th:text="${tag.getName()}">tag</a>
+    </div>
+</body>
+</html>
