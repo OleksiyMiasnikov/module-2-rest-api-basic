@@ -37,4 +37,10 @@ public class TagDAO {
     public Tag show(int id){
         return tagList.stream().filter(t -> t.getId() == id).findAny().orElse(null);
     }
+
+    public Tag create(Tag tag) {
+        tag.setId(++TAG_COUNT);
+        tagList.add(tag);
+        return tag;
+    }
 }
