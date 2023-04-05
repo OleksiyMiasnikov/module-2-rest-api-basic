@@ -9,6 +9,7 @@
 <body>
     <form th:method="PATCH" th:action="@{/tags/{id}(id = ${tag.getId()})}" th:object="${tag}">
         <label for="name">Enter tag name: </label>
+        <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</div>
         <input type="text" th:field="*{name}" id="name"/>
         <br>
         <input type="submit" value="Update"/>

@@ -4,16 +4,15 @@ import com.epam.esm.models.Certificate;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class CertificateDAO {
     private static int CERTIFICATE_COUNT;
-    private List<Certificate> certificateList;
+    private final List<Certificate> certificateList;
     {
-        certificateList = new LinkedList<Certificate>();
+        certificateList = new LinkedList<>();
         certificateList.add(Certificate.builder()
                 .id(++CERTIFICATE_COUNT)
                 .name("Certificate_01")

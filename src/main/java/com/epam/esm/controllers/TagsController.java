@@ -1,10 +1,13 @@
 package com.epam.esm.controllers;
 
 import com.epam.esm.dao.TagDAO;
+import com.epam.esm.exception.TagException;
 import com.epam.esm.models.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -28,26 +31,29 @@ public class TagsController {
     }
 
     @GetMapping("/new")
-    public String newTag(Model model) {
+    public String newTag(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult) {
         System.out.println("new tag");
-        model.addAttribute("tag", Tag.builder().build());
         return "tags/new";
     }
 
+//    @PostMapping()
+//    public String create(@RequestParam("name") String name) {
+//        Tag tag = new Tag();
+//        tag.setName(name);
+//        tagDAO.create(tag);
+//        return "redirect:/tags";
+//    }
+
     @PostMapping()
-    public String create(@RequestParam("name") String name) {
-        Tag tag = Tag.builder().name(name).build();
-        tagDAO.create(tag);
-        return "redirect:/tags";
-    }
-/*
-    @PostMapping()
-    public String create(@ModelAttribute("tag") Tag tag) {
+    public String create(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "tags/new";
+        }
         tagDAO.create(tag);
         return "redirect:/tags";
     }
 
-*/
+
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         model.addAttribute("tag", tagDAO.show(id));
@@ -55,8 +61,12 @@ public class TagsController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("tag") Tag tag, @PathVariable("id") int id) {
+    public String update(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult,
+                         @PathVariable("id") int id)  {
         System.out.println("update");
+        if (bindingResult.hasErrors()) {
+            return "tags/edit";
+        }
         if (tagDAO.update(id, tag)){
             return "redirect:/tags";
         }

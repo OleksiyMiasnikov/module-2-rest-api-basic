@@ -3,32 +3,21 @@ package com.epam.esm.dao;
 import com.epam.esm.models.Tag;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class TagDAO {
     private static int TAG_COUNT;
-    private List<Tag> tagList;
+
+
+    private final List<Tag> tagList;
     {
-        tagList = new LinkedList<Tag>();
-        tagList.add(Tag.builder()
-                .id(++TAG_COUNT)
-                .name("Tag_01")
-                .build());
-        tagList.add(Tag.builder()
-                .id(++TAG_COUNT)
-                .name("Tag_02")
-                .build());
-        tagList.add(Tag.builder()
-                .id(++TAG_COUNT)
-                .name("Tag_03")
-                .build());
-        tagList.add(Tag.builder()
-                .id(++TAG_COUNT)
-                .name("Tag_04")
-                .build());
+        tagList = new LinkedList<>();
+        tagList.add(new Tag(++TAG_COUNT, "Tag_01"));
+        tagList.add(new Tag(++TAG_COUNT, "Tag_02"));
+        tagList.add(new Tag(++TAG_COUNT, "Tag_03"));
+        tagList.add(new Tag(++TAG_COUNT, "Tag_04"));
     }
 
     public List<Tag> index() {
