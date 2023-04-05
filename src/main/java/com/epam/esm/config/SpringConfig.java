@@ -53,12 +53,12 @@ public class SpringConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource() { //jdbc:mysql://localhost:3306/db_test?user=root&password=18De1975
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/module_2_db");
-        dataSource.setUsername("user");
-        dataSource.setPassword("password");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver"); //com.mysql.jdbc.Driver
+        dataSource.setUrl("jdbc:mysql://localhost:3306/module_2_db"); // jdbc:mysql://localhost:3306/springjdbc
+        dataSource.setUsername("root");
+        dataSource.setPassword("~Root5420~");
         return dataSource;
     }
 
