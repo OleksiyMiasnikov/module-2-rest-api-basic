@@ -11,5 +11,7 @@
     <div th:each="tag : ${tags}">
         <a th:href="@{/tags/{id}(id = ${tag.getId()})}" th:text="${tag.getName()}">tag</a>
     </div>
+    <hr>
+    <a href="/tags/new">New tag</a>
 </body>
 </html>
