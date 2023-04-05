@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>All tags</title>
 </head>
 
 <body>
+
     <div th:each="tag : ${tags}">
         <a th:href="@{/tags/{id}(id = ${tag.getId()})}" th:text="${tag.getName()}">tag</a>
     </div>

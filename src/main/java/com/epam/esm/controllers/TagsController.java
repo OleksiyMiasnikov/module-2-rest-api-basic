@@ -1,7 +1,6 @@
 package com.epam.esm.controllers;
 
 import com.epam.esm.dao.TagDAO;
-import com.epam.esm.exception.TagException;
 import com.epam.esm.models.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,7 +29,8 @@ public class TagsController {
 
     @GetMapping("/new")
     public String newTag(Model model) {
-        model.addAttribute("new_tag", Tag.builder().build());
+        System.out.println("new tag");
+        model.addAttribute("tag", Tag.builder().build());
         return "tags/new";
     }
 
@@ -42,9 +42,33 @@ public class TagsController {
     }
 /*
     @PostMapping()
-    public String create(@ModelAttribute("new_tag") Tag tag) {
+    public String create(@ModelAttribute("tag") Tag tag) {
         tagDAO.create(tag);
         return "redirect:/tags";
     }
+
 */
+    @GetMapping("/{id}/edit")
+    public String edit(Model model, @PathVariable("id") int id) {
+        model.addAttribute("tag", tagDAO.show(id));
+        return "tags/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("tag") Tag tag, @PathVariable("id") int id) {
+        System.out.println("update");
+        if (tagDAO.update(id, tag)){
+            return "redirect:/tags";
+        }
+        return "error";
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable("id") int id) {
+        System.out.println("delete");
+        tagDAO.delete(id);
+        return "redirect:/tags";
+    }
+
+
 }

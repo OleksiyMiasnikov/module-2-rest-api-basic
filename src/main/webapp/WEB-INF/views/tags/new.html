@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org" lang="en">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>New tag</title>
 </head>
-
 <body>
-    <form th:method="POST" th:action="@{/tags}" th:object="${new_tag}">
-        <label for="name">Enter tag name: </label>
-        <input type="text" th:field="*{name}" id="name"/>
-        <br>
-        <input type="submit" value="Create"/>
-    </form>
+
+<form th:method="POST" th:action="@{/tags}" th:object="${tag}">
+    <label for="name">Enter name: </label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br/>
+    <input type="submit" value="Create"/>
+</form>
+
 </body>
 </html>

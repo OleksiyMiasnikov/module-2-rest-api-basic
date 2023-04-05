@@ -2,11 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Show tag</title>
 </head>
 
 <body>
-    <p th:text="${tag}"></p>
+    <p th:text="${tag.getId()}"></p>
+    <p th:text="${tag.getName()}"></p>
+    <hr>
+    <a th:href="@{/tags/{id}/edit(id=${tag.getId()})}">Edit</a>
+    <br>
+    <form th:method="GET" th:action="@{/tags/{id}/edit(id=${tag.getId()})}">
+        <input type="submit" value="Edit"/>
+    </form>
+    <form th:method="DELETE" th:action="@{/tags/{id}(id=${tag.getId()})}">
+        <input type="submit" value="!Delete!"/>
+    </form>
 </body>
 </html>
