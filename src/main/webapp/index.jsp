@@ -9,5 +9,7 @@
 <body>
     <H1>module #2. REST API basic</H1>
     <a href="/tags">List of tags</a>
+    <br>
+    <a href="/certificates">List of certificates</a>
 </body>
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update certificate</title>
+</head>
+
+<body>
+    <form th:method="PATCH" th:action="@{/certificates/{id}(id = ${certificate.getId()})}" th:object="${certificate}">
+        <label for="name">name: </label>
+        <input type="text" th:field="*{name}" id="name"/>
+        <br>
+        <label for="description">description: </label>
+        <input type="text" th:field="*{description}" id="description"/>
+        <br>
+        <label for="price">price: </label>
+        <input type="text" th:field="*{price}" id="price"/>
+        <br>
+        <label for="duration">duration: </label>
+        <input type="text" th:field="*{duration}" id="duration"/>
+        <br>
+        <label for="create_date">create date: </label>
+        <input type="date" th:field="*{createDate}" id="create_date"/>
+        <br>
+        <label for="last_update_date">last update date: </label>
+        <input type="date" th:field="*{lastUpdateDate}" id="last_update_date"/>
+        <br>
+        <hr>
+        <input type="submit" value="Update"/>
+    </form>
+</body>
+</html>

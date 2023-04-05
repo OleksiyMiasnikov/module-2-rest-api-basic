@@ -3,12 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>All tags</title>
+    <title>All certificates</title>
 </head>
 
 <body>
-    <div th:each="tag : ${tags}">
-        <a th:href="@{/tags/{id}(id = ${tag.getId()})}" th:text="${tag.getName()}">tag</a>
+
+    <div th:each="certificate : ${certificates}">
+        <a th:href="@{/certificates/{id}(id = ${certificate.getId()})}" th:text="${certificate.getName()}">certificate</a>
     </div>
+    <hr>
+    <a href="/certificates/new">New certificate</a>
 </body>
 </html>

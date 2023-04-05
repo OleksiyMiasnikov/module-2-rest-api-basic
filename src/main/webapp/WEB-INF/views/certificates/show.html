@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Show certificate</title>
+</head>
+
+<body>
+    <p th:text="${certificate.getId()}"></p>
+    <p th:text="${certificate.getName()}"></p>
+    <hr>
+    <a th:href="@{/certificates/{id}/edit(id=${certificate.getId()})}">Edit</a>
+    <br>
+    <form th:method="GET" th:action="@{/certificates/{id}/edit(id=${certificate.getId()})}">
+        <input type="submit" value="Edit"/>
+    </form>
+    <form th:method="DELETE" th:action="@{/certificates/{id}(id=${certificate.getId()})}">
+        <input type="submit" value="!Delete!"/>
+    </form>
+</body>
+</html>
