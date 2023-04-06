@@ -7,11 +7,17 @@
 </head>
 
 <body>
-
-    <div th:each="tag : ${tags}">
-        <a th:href="@{/tags/{id}(id = ${tag.getId()})}" th:text="${tag.getName()}">tag</a>
-    </div>
+    <table th:each="tag : ${tags}">
+        <tr>
+            <th style="width:20px"th:text="${tag.getId()}"/>
+            <th style="width:50px">
+                <a th:href="@{/tags/{id}(id = ${tag.getId()})}" th:text="${tag.getName()}">tag</a>
+            </th>
+        </tr>
+    </table>
     <hr>
     <a href="/tags/new">New tag</a>
+    <hr>
+    <a href="/certificates">List of gift certificates</a>
 </body>
 </html>

@@ -7,11 +7,23 @@
 </head>
 
 <body>
-
-    <div th:each="certificate : ${certificates}">
-        <a th:href="@{/certificates/{id}(id = ${certificate.getId()})}" th:text="${certificate.getName()}">certificate</a>
-    </div>
+    <table th:each="certificate : ${certificates}">
+        <tr>
+            <th style="width:20px"th:text="${certificate.getId()}"/>
+            <th style="width:50px">
+                <a th:href="@{/certificates/{id}(id = ${certificate.getId()})}" th:text="${certificate.getName()}">certificate</a>
+            </th>
+            <th style="width:20px"th:text="${certificate.getDescription()}"/>
+            <th style="width:20px"th:text="${certificate.getPrice()}"/>
+            <th style="width:20px"th:text="${certificate.getDuration()}"/>
+            <th style="width:50px"th:text="${certificate.getCreateDate()}"/>
+            <th style="width:50px"th:text="${#temporals.formatISO(certificate.getCreateDate())}"/>
+            <th style="width:50px"th:text="${certificate.getLastUpdateDate()}"/>
+        </tr>
+    </table>
     <hr>
     <a href="/certificates/new">New certificate</a>
+    <hr>
+    <a href="/tags">List of tags</a>
 </body>
 </html>

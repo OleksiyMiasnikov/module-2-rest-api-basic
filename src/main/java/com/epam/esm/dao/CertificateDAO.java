@@ -1,6 +1,10 @@
 package com.epam.esm.dao;
 
 import com.epam.esm.models.Certificate;
+import com.epam.esm.models.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
@@ -9,78 +13,54 @@ import java.util.List;
 
 @Component
 public class CertificateDAO {
-    private static int CERTIFICATE_COUNT;
-    private final List<Certificate> certificateList;
-    {
-        certificateList = new LinkedList<>();
-        certificateList.add(Certificate.builder()
-                .id(++CERTIFICATE_COUNT)
-                .name("Certificate_01")
-                .description("week")
-                .price(100)
-                .duration(7)
-                .createDate(new SimpleDateFormat())
-                .lastUpdateDate(new SimpleDateFormat())
-                .build());
-        certificateList.add(Certificate.builder()
-                .id(++CERTIFICATE_COUNT)
-                .name("Certificate_02")
-                .description("month")
-                .price(1000)
-                .duration(30)
-                .createDate(new SimpleDateFormat())
-                .lastUpdateDate(new SimpleDateFormat())
-                .build());
-        certificateList.add(Certificate.builder()
-                .id(++CERTIFICATE_COUNT)
-                .name("Certificate_03")
-                .description("half year")
-                .price(100.50)
-                .duration(180)
-                .createDate(new SimpleDateFormat())
-                .lastUpdateDate(new SimpleDateFormat())
-                .build());
-        certificateList.add(Certificate.builder()
-                .id(++CERTIFICATE_COUNT)
-                .name("Certificate_04")
-                .description("year")
-                .price(20.48)
-                .duration(365)
-                .createDate(new SimpleDateFormat())
-                .lastUpdateDate(new SimpleDateFormat())
-                .build());
-    }
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public List<Certificate> index() {
-        return certificateList;
+        return jdbcTemplate.query("SELECT * FROM certificates",
+                new BeanPropertyRowMapper<>(Certificate.class));
     }
 
     public Certificate show(int id){
-        return certificateList.stream().filter(s -> s.getId() == id).findAny().orElse(null);
+        return jdbcTemplate.query("SELECT * FROM certificates WHERE id=?",
+                        new Object[]{id},
+                        new BeanPropertyRowMapper<>(Certificate.class))
+                .stream()
+                .findAny()
+                .orElse(null);
     }
 
-    public Certificate create(Certificate Certificate) {
-        Certificate.setId(++CERTIFICATE_COUNT);
-        certificateList.add(Certificate);
-        return Certificate;
+    public Certificate create(Certificate certificate) {
+        jdbcTemplate.update("INSERT INTO certificates VALUES (default, ?, ?, ?, ?, ?, ?)",
+                certificate.getName(),
+                certificate.getDescription(),
+                certificate.getPrice(),
+                certificate.getDuration(),
+                certificate.getCreateDate(),
+                certificate.getLastUpdateDate());
+        return certificate;
     }
 
-    public boolean update(int id,Certificate Certificate) {
-        for (Certificate element : certificateList) {
-            if (element.getId() == id) {
-                element.setName(Certificate.getName());
-//                element.setDescription(Certificate.getDescription());
-//                element.setPrice(Certificate.getPrice());
-//                element.setDuration(Certificate.getDuration());
-//                element.setCreateDate(Certificate.getCreateDate());
-//                element.setLastUpdateDate(Certificate.getLastUpdateDate());
-                return true;
-            }
-        }
-        return false;
+    public boolean update(int id, Certificate certificate) {
+        jdbcTemplate.update("UPDATE certificates " +
+                        "SET name=? " +
+                            "description=? " +
+                            "price=? " +
+                            "duration=? " +
+                            "create_date=? " +
+                            "last_update_date=? " +
+                        "WHERE id=?",
+                certificate.getName(),
+                certificate.getDescription(),
+                certificate.getPrice(),
+                certificate.getDuration(),
+                certificate.getCreateDate(),
+                certificate.getLastUpdateDate(),
+                id);
+        return true;
     }
 
     public void delete(int id) {
-        certificateList.removeIf((s) -> s.getId() == id);
+        jdbcTemplate.update("DELETE FROM certificates WHERE id=?", id);
     }
 }

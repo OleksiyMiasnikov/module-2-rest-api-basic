@@ -3,12 +3,17 @@ package com.epam.esm.models;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Certificate {
     private int id;
@@ -22,6 +27,6 @@ public class Certificate {
     @Digits(integer = 10 /*precision*/, fraction = 0 /*scale*/)
     private int duration;
 
-    private SimpleDateFormat createDate;
-    private SimpleDateFormat lastUpdateDate;
+    private LocalDateTime createDate;
+    private LocalDateTime lastUpdateDate;
 }

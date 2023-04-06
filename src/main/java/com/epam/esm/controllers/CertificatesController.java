@@ -35,19 +35,11 @@ public class CertificatesController {
     }
 
     @PostMapping()
-    public String create(@RequestParam("name") String name) {
-        Certificate certificate = Certificate.builder().name(name).build();
+    public String create(@ModelAttribute("certificate") Certificate certificate) {
         certificateDAO.create(certificate);
         return "redirect:/certificates";
     }
-    /*
-        @PostMapping()
-        public String create(@ModelAttribute("certificate") Certificate certificate) {
-            certificateDAO.create(certificate);
-            return "redirect:/certificates";
-        }
     
-    */
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         System.out.println("to edit page");
