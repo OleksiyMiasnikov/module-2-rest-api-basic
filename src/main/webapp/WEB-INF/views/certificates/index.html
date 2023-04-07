@@ -4,20 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>All certificates</title>
+    <style>
+        table, th, td {
+          border:1px solid black;
+          border-collapse: collapse;
+        }
+    </style>
 </head>
 
 <body>
-    <table th:each="certificate : ${certificates}">
+    <table style="width:70%" th:each="certificate : ${certificates}">
         <tr>
-            <th style="width:20px"th:text="${certificate.getId()}"/>
-            <th style="width:50px">
+            <th style="width:3%"th:text="${certificate.getId()}"/>
+            <th style="width:10%">
                 <a th:href="@{/certificates/{id}(id = ${certificate.getId()})}" th:text="${certificate.getName()}">certificate</a>
             </th>
-            <th style="width:20px"th:text="${certificate.getDescription()}"/>
-            <th style="width:20px"th:text="${certificate.getPrice()}"/>
-            <th style="width:20px"th:text="${certificate.getDuration()}"/>
-            <th style="width:70px"th:text="${certificate.getCreateDate()}"/>
-            <th style="width:70px"th:text="${certificate.getLastUpdateDate()}"/>
+            <th style="width:20%"th:text="${certificate.getDescription()}"/>
+            <th style="width:8%"th:text="${certificate.getPrice()}"/>
+            <th style="width:6%"th:text="${certificate.getDuration()}"/>
+            <th style="width:30%"th:text="${certificate.getCreateDate()}"/>
+            <th style="width:30%"th:text="${certificate.getLastUpdateDate()}"/>
         </tr>
     </table>
     <hr>

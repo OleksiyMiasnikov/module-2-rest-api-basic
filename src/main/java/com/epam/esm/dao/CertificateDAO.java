@@ -49,10 +49,10 @@ public class CertificateDAO {
 
     public boolean update(int id, Certificate certificate) {
         jdbcTemplate.update("UPDATE certificates " +
-                        "SET name=? " +
-                            "description=? " +
-                            "price=? " +
-                            "duration=? " +
+                        "SET name=?, " +
+                            "description=?, " +
+                            "price=?, " +
+                            "duration=?, " +
                             "last_update_date=? " +
                         "WHERE id=?",
                 certificate.getName(),

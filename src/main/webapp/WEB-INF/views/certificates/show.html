@@ -4,14 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Show certificate</title>
+    <style>
+        table, th, td {
+          border:1px solid black;
+          border-collapse: collapse;
+        }
+    </style>
 </head>
 
 <body>
-    <p th:text="${certificate.getId()}"></p>
-    <p th:text="${certificate.getName()}"></p>
+    <table style="width:70%" >
+        <tr>
+            <th style="width:3%"th:text="${certificate.getId()}"/>
+            <th style="width:10%" th:text="${certificate.getName()}"/>
+            <th style="width:20%"th:text="${certificate.getDescription()}"/>
+            <th style="width:8%"th:text="${certificate.getPrice()}"/>
+            <th style="width:6%"th:text="${certificate.getDuration()}"/>
+            <th style="width:30%"th:text="${certificate.getCreateDate()}"/>
+            <th style="width:30%"th:text="${certificate.getLastUpdateDate()}"/>
+        </tr>
+    </table>
     <hr>
-    <a th:href="@{/certificates/{id}/edit(id=${certificate.getId()})}">Edit</a>
-    <br>
+
     <form th:method="GET" th:action="@{/certificates/{id}/edit(id=${certificate.getId()})}">
         <input type="submit" value="Edit"/>
     </form>
