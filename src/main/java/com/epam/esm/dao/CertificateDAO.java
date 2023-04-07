@@ -7,9 +7,14 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
 
 @Component
 public class CertificateDAO {
@@ -31,13 +36,14 @@ public class CertificateDAO {
     }
 
     public Certificate create(Certificate certificate) {
+        String dateTime = ZonedDateTime.now().toLocalDateTime().toString();
         jdbcTemplate.update("INSERT INTO certificates VALUES (default, ?, ?, ?, ?, ?, ?)",
                 certificate.getName(),
                 certificate.getDescription(),
                 certificate.getPrice(),
                 certificate.getDuration(),
-                certificate.getCreateDate(),
-                certificate.getLastUpdateDate());
+                dateTime,
+                dateTime);
         return certificate;
     }
 
@@ -47,15 +53,13 @@ public class CertificateDAO {
                             "description=? " +
                             "price=? " +
                             "duration=? " +
-                            "create_date=? " +
                             "last_update_date=? " +
                         "WHERE id=?",
                 certificate.getName(),
                 certificate.getDescription(),
                 certificate.getPrice(),
                 certificate.getDuration(),
-                certificate.getCreateDate(),
-                certificate.getLastUpdateDate(),
+                ZonedDateTime.now().toLocalDateTime().toString(),
                 id);
         return true;
     }

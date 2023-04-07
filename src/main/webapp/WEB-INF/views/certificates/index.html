@@ -16,9 +16,8 @@
             <th style="width:20px"th:text="${certificate.getDescription()}"/>
             <th style="width:20px"th:text="${certificate.getPrice()}"/>
             <th style="width:20px"th:text="${certificate.getDuration()}"/>
-            <th style="width:50px"th:text="${certificate.getCreateDate()}"/>
-            <th style="width:50px"th:text="${#temporals.formatISO(certificate.getCreateDate())}"/>
-            <th style="width:50px"th:text="${certificate.getLastUpdateDate()}"/>
+            <th style="width:70px"th:text="${certificate.getCreateDate()}"/>
+            <th style="width:70px"th:text="${certificate.getLastUpdateDate()}"/>
         </tr>
     </table>
     <hr>

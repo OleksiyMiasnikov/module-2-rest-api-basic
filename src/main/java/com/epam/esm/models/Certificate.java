@@ -27,6 +27,6 @@ public class Certificate {
     @Digits(integer = 10 /*precision*/, fraction = 0 /*scale*/)
     private int duration;
 
-    private LocalDateTime createDate;
-    private LocalDateTime lastUpdateDate;
+    private String createDate;
+    private String lastUpdateDate;
 }
