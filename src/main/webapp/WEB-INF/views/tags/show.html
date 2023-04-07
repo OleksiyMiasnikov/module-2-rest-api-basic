@@ -22,11 +22,11 @@
         </tr>
     </table>
     <hr>
-    <form th:method="GET" th:action="@{/tags/{id}/edit(id=${tag.getId()})}">
-        <input type="submit" value="Edit"/>
-    </form>
-<!--    <form th:method="DELETE" th:action="@{/tags/{id}(id=${tag.getId()})}">-->
-<!--        <input type="submit" value="!Delete!"/>-->
+<!--    <form th:method="GET" th:action="@{/tags/{id}/edit(id=${tag.getId()})}">-->
+<!--        <input type="submit" value="Edit"/>-->
 <!--    </form>-->
+    <form th:method="DELETE" th:action="@{/tags/{id}(id=${tag.getId()})}">
+        <input type="submit" value="!Delete!"/>
+    </form>
 </body>
 </html>

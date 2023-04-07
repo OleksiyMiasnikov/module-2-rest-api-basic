@@ -4,12 +4,14 @@ import com.epam.esm.dao.TagDAO;
 import com.epam.esm.exception.TagException;
 import com.epam.esm.models.Tag;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequestMapping("/tags")
 public class TagsController {
@@ -32,7 +34,7 @@ public class TagsController {
 
     @GetMapping("/new")
     public String newTag(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult) {
-        System.out.println("new tag");
+        log.info("new tag");
         return "tags/new";
     }
 
@@ -63,7 +65,7 @@ public class TagsController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult,
                          @PathVariable("id") int id)  {
-        System.out.println("update");
+        log.info("update");
         if (bindingResult.hasErrors()) {
             return "tags/edit";
         }
@@ -75,7 +77,7 @@ public class TagsController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        System.out.println("delete");
+        log.info("delete");
         tagDAO.delete(id);
         return "redirect:/tags";
     }

@@ -1,33 +1,28 @@
 package com.epam.esm.dao;
 
 import com.epam.esm.models.Certificate;
-import com.epam.esm.models.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.ZonedDateTime;
-import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.TimeZone;
 
+@Slf4j
 @Component
 public class CertificateDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public List<Certificate> index() {
-        return jdbcTemplate.query("SELECT * FROM certificates",
+        return jdbcTemplate.query("SELECT * FROM certificate",
                 new BeanPropertyRowMapper<>(Certificate.class));
     }
 
     public Certificate show(int id){
-        return jdbcTemplate.query("SELECT * FROM certificates WHERE id=?",
+        return jdbcTemplate.query("SELECT * FROM certificate WHERE id=?",
                         new Object[]{id},
                         new BeanPropertyRowMapper<>(Certificate.class))
                 .stream()
@@ -37,7 +32,7 @@ public class CertificateDAO {
 
     public Certificate create(Certificate certificate) {
         String dateTime = ZonedDateTime.now().toLocalDateTime().toString();
-        jdbcTemplate.update("INSERT INTO certificates VALUES (default, ?, ?, ?, ?, ?, ?)",
+        jdbcTemplate.update("INSERT INTO certificate VALUES (default, ?, ?, ?, ?, ?, ?)",
                 certificate.getName(),
                 certificate.getDescription(),
                 certificate.getPrice(),
@@ -48,7 +43,7 @@ public class CertificateDAO {
     }
 
     public boolean update(int id, Certificate certificate) {
-        jdbcTemplate.update("UPDATE certificates " +
+        jdbcTemplate.update("UPDATE certificate " +
                         "SET name=?, " +
                             "description=?, " +
                             "price=?, " +
@@ -65,6 +60,6 @@ public class CertificateDAO {
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM certificates WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM certificate WHERE id=?", id);
     }
 }

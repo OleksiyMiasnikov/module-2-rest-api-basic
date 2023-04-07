@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>All certificates</title>
+    <style>
+        table, th, td {
+          border:1px solid black;
+          border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<body>
+    <table style="width:20%" th:each="certificate_with_tag : ${certificates_with_tags}">
+        <tr>
+            <th style="width:3%"th:text="${certificate_with_tag.getTagId()}"/>
+            <th style="width:3%"th:text="${certificate_with_tag.getCertificateId()}"/>
+        </tr>
+    </table>
+    <hr>
+
+</body>
+</html>

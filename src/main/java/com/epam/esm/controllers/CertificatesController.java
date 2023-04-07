@@ -2,11 +2,13 @@ package com.epam.esm.controllers;
 
 import com.epam.esm.dao.CertificateDAO;
 import com.epam.esm.models.Certificate;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Controller
 @RequestMapping("/certificates")
 public class CertificatesController {
@@ -29,7 +31,7 @@ public class CertificatesController {
 
     @GetMapping("/new")
     public String newCertificate(Model model) {
-        System.out.println("new certificate");
+        log.info("new certificate");
         model.addAttribute("certificate", Certificate.builder().build());
         return "certificates/new";
     }
@@ -42,14 +44,14 @@ public class CertificatesController {
     
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
-        System.out.println("to edit page");
+        log.info("to edit page");
         model.addAttribute("certificate", certificateDAO.show(id));
         return "certificates/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("certificate") Certificate certificate, @PathVariable("id") int id) {
-        System.out.println("update");
+        log.info("update");
         if (certificateDAO.update(id, certificate)){
             return "redirect:/certificates";
         }
@@ -58,7 +60,7 @@ public class CertificatesController {
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
-        System.out.println("delete");
+        log.info("delete");
         certificateDAO.delete(id);
         return "redirect:/certificates";
     }

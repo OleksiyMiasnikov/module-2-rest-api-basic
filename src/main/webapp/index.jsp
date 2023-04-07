@@ -11,5 +11,7 @@
     <a href="/tags">List of tags</a>
     <br>
     <a href="/certificates">List of gift certificates</a>
+    <br>
+    <a href="/certificates_with_tags">List of gift certificates with tags</a>
 </body>
 </html>
