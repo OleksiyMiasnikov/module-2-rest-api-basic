@@ -23,11 +23,11 @@ public class CertificatesWithTagsController {
         return "certificates_with_tags/index";
     }
 
-    @GetMapping("/tag/{id}")
-    public String showByTagId(@PathVariable("id") int id,
+    @GetMapping("/tag/{name}")
+    public String showByTagId(@PathVariable("name") String name,
                        Model model) {
         log.info("showByTagId loaded");
-        model.addAttribute("certificates_with_tags", dao.showByTagId(id));
+        model.addAttribute("certificates_with_tags", dao.showByTagName(name));
         return "certificates_with_tags/index";
     }
 }

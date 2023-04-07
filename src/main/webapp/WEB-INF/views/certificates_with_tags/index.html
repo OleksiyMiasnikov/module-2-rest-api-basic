@@ -13,10 +13,17 @@
 </head>
 
 <body>
-    <table style="width:20%" th:each="certificate_with_tag : ${certificates_with_tags}">
+    <table style="width:80%" th:each="certificate_with_tag : ${certificates_with_tags}">
         <tr>
             <th style="width:3%"th:text="${certificate_with_tag.getTagId()}"/>
+            <th style="width:10%"th:text="${certificate_with_tag.getTagName()}"/>
             <th style="width:3%"th:text="${certificate_with_tag.getCertificateId()}"/>
+            <th style="width:10%"th:text="${certificate_with_tag.getCertificateName()}"/>
+            <th style="width:20%"th:text="${certificate_with_tag.getDescription()}"/>
+            <th style="width:5%"th:text="${certificate_with_tag.getPrice()}"/>
+            <th style="width:5%"th:text="${certificate_with_tag.getDuration()}"/>
+            <th style="width:20%"th:text="${certificate_with_tag.getCreateDate()}"/>
+            <th style="width:20%"th:text="${certificate_with_tag.getLastUpdateDate()}"/>
         </tr>
     </table>
     <hr>

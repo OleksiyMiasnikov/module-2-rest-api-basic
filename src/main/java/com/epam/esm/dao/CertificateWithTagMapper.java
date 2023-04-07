@@ -15,6 +15,13 @@ public class CertificateWithTagMapper implements RowMapper<CertificateWithTag> {
         return CertificateWithTag.builder()
                 .tagId(rs.getInt("tag_id"))
                 .certificateId(rs.getInt("certificate_id"))
+                .certificateName(rs.getString("certificate_name"))
+                .description(rs.getString("description"))
+                .price(rs.getDouble("price"))
+                .duration(rs.getInt("duration"))
+                .createDate(rs.getString("create_date"))
+                .lastUpdateDate(rs.getString("last_update_date"))
+                .tagName(rs.getString("tag_name"))
                 .build();
     }
 }
