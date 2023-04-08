@@ -1,20 +1,29 @@
 package com.epam.esm.dao;
 
 import com.epam.esm.models.Certificate;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+import javax.annotation.Resource;
 import java.time.ZonedDateTime;
 import java.util.List;
 
 @Slf4j
-@Component
+@Repository
+@RequiredArgsConstructor
 public class CertificateDAO {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+//    @Resource
+//    @Inject
+//    INjects VS Resource(name = "myBean") VS Autowired VS Qualifier
+//    How to inject prototype to singleton?
+//    Layered
+//    @Controller vs @RestController
+//
+    private final JdbcTemplate jdbcTemplate;
 
     public List<Certificate> index() {
         return jdbcTemplate.query("SELECT * FROM certificate",
