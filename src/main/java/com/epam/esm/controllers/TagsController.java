@@ -12,8 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/tags")
 @RequiredArgsConstructor
 public class TagsController {
@@ -21,16 +23,13 @@ public class TagsController {
     private final TagDAO tagDAO;
 
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("tags", tagDAO.index());
-        return "tags/index";
+    public List<Tag> index(Model model) {
+        return tagDAO.index();
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id,
-                       Model model) {
-        model.addAttribute("tag", tagDAO.show(id));
-        return "tags/show";
+    public Tag show(@PathVariable("id") int id) {
+        return tagDAO.show(id);
     }
 
     @GetMapping("/new")
@@ -38,14 +37,6 @@ public class TagsController {
         log.info("new tag");
         return "tags/new";
     }
-
-//    @PostMapping()
-//    public String create(@RequestParam("name") String name) {
-//        Tag tag = new Tag();
-//        tag.setName(name);
-//        tagDAO.create(tag);
-//        return "redirect:/tags";
-//    }
 
     @PostMapping()
     public String create(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult) {
