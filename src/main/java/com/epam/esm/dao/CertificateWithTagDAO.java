@@ -1,19 +1,16 @@
 package com.epam.esm.dao;
 
-import com.epam.esm.models.Certificate;
 import com.epam.esm.models.CertificateWithTag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Repository
 public class CertificateWithTagDAO {
     private final String JOIN_SQL =
             "SELECT certificate_id, " +

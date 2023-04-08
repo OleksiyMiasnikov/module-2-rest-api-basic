@@ -3,12 +3,10 @@ package com.epam.esm.dao;
 import com.epam.esm.models.Certificate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import javax.annotation.Resource;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -18,7 +16,7 @@ import java.util.List;
 public class CertificateDAO {
 //    @Resource
 //    @Inject
-//    INjects VS Resource(name = "myBean") VS Autowired VS Qualifier
+//    Injects VS Resource(name = "myBean") VS Autowired VS Qualifier
 //    How to inject prototype to singleton?
 //    Layered
 //    @Controller vs @RestController
