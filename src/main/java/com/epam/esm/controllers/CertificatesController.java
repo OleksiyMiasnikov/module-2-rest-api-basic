@@ -2,8 +2,8 @@ package com.epam.esm.controllers;
 
 import com.epam.esm.dao.CertificateDAO;
 import com.epam.esm.models.Certificate;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @Controller
 @RequestMapping("/certificates")
+@RequiredArgsConstructor
 public class CertificatesController {
 
-    @Autowired
-    CertificateDAO certificateDAO;
-
+    private final CertificateDAO certificateDAO;
+    @ResponseBody
     @GetMapping()
     public String index(Model model) {
         model.addAttribute("certificates", certificateDAO.index());

@@ -1,20 +1,21 @@
 package com.epam.esm.dao;
 
-import com.epam.esm.models.Certificate;
 import com.epam.esm.models.CertificateWithTag;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
-@Component
+@Repository
+@RequiredArgsConstructor
 public class CertificateWithTagDAO {
+
+    private final JdbcTemplate jdbcTemplate;
     private final String JOIN_SQL =
             "SELECT certificate_id, " +
                 "name as certificate_name, " +
@@ -35,8 +36,7 @@ public class CertificateWithTagDAO {
                     "WHERE certificate_with_tag.tag_id = tag.id" +
                  ") tag_tb " +
             "WHERE tag_tb.certificate_id = certificate.id";
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+
 
     public List<CertificateWithTag> index() {
         log.info("index loaded");
