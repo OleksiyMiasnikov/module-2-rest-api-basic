@@ -33,45 +33,34 @@ public class TagsController {
     }
 
     @GetMapping("/new")
-    public String newTag(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult) {
+    public String newTag(@ModelAttribute("tag") Tag tag) {
         log.info("new tag");
         return "tags/new";
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "tags/new";
-        }
+    public String create(@ModelAttribute("tag") Tag tag) {
         tagDAO.create(tag);
         return "redirect:/tags";
     }
 
 
     @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("tag", tagDAO.show(id));
-        return "tags/edit";
+    public Tag edit(@PathVariable("id") int id) {
+        return tagDAO.show(id);
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("tag") @Valid Tag tag, BindingResult bindingResult,
+    public boolean update(@ModelAttribute("tag") Tag tag,
                          @PathVariable("id") int id)  {
         log.info("update");
-        if (bindingResult.hasErrors()) {
-            return "tags/edit";
-        }
-        if (tagDAO.update(id, tag)){
-            return "redirect:/tags";
-        }
-        return "error";
+        return tagDAO.update(id, tag);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
+    public boolean delete(@PathVariable("id") int id) {
         log.info("delete");
-        tagDAO.delete(id);
-        return "redirect:/tags";
+        return tagDAO.delete(id);
     }
 
 

@@ -41,7 +41,8 @@ public class TagDAO {
         return true;
     }
 
-    public void delete(int id) {
+    public boolean delete(int id) {
         jdbcTemplate.update("DELETE FROM tag WHERE id=?", id);
+        return true;
     }
 }
