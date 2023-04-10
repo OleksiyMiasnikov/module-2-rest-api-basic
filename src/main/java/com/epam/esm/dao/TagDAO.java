@@ -3,18 +3,14 @@ package com.epam.esm.dao;
 import com.epam.esm.models.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
+
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
@@ -25,41 +21,40 @@ public class TagDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public List<Tag> index() {
+    public Tag create(String name) {
+        log.info("DAO. Create tag with name: " + name);
+        final String SQL = "INSERT INTO tag VALUES (default, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection
+                    .prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, name);
+            return ps;
+        }, keyHolder);
+
+        return findById(keyHolder.getKey().intValue());
+    }
+
+    public List<Tag> findAll() {
+        log.info("DAO. Find all tags");
         return jdbcTemplate.query("SELECT * FROM tag", new BeanPropertyRowMapper<>(Tag.class));
     }
 
-    public Tag show(int id){
+    public Tag findById(int id){
+        log.info("DAO. Find tag by id: " + id);
         return jdbcTemplate.query("SELECT * FROM tag WHERE id=?",
-                new Object[]{id},
+                new Object[]{(Object) id},
                 new BeanPropertyRowMapper<>(Tag.class))
                 .stream()
                 .findAny()
                 .orElse(null);
     }
 
-    public boolean update(int id,Tag tag) {
-        jdbcTemplate.update("UPDATE tag SET name=? WHERE id=?", tag.getName(), id);
-        return true;
-    }
-
     public boolean delete(int id) {
-        jdbcTemplate.update("DELETE FROM tag WHERE id=?", id);
-        return true;
-    }
-
-    public Tag create(String name) {
-        final String SQL = "INSERT INTO tag VALUES (default, ?)";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-        jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection
-                    .prepareStatement(SQL,
-                            Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, name);
-            return ps;
-        }, keyHolder);
-
-        return show(keyHolder.getKey().intValue());
+        log.info("DAO. Delete tag by id: " + id);
+        int result = jdbcTemplate.update("DELETE FROM tag WHERE id=?", (Object) id);
+        log.info("result of deleting " + result);
+        return result == 1;
     }
 }

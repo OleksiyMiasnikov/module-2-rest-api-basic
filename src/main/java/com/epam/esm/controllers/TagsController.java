@@ -1,15 +1,9 @@
 package com.epam.esm.controllers;
 
-import com.epam.esm.dao.TagDAO;
-import com.epam.esm.exception.TagException;
 import com.epam.esm.models.Tag;
-import jakarta.validation.Valid;
+import com.epam.esm.services.TagService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,46 +14,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TagsController {
 
-    private final TagDAO tagDAO;
-
-    @GetMapping()
-    public List<Tag> index() {
-        return tagDAO.index();
-    }
-
-    @GetMapping("/{id}")
-    public Tag show(@PathVariable("id") int id) {
-        return tagDAO.show(id);
-    }
-
-//    @GetMapping("/new")
-//    public String newTag(@ModelAttribute("tag") Tag tag) {
-//        log.info("new tag");
-//        return "tags/new";
-//    }
+    private final TagService service;
 
     @PostMapping()
     public Tag create(@RequestParam("name") String name) {
-        return tagDAO.create(name);
+        log.info("Controller. Create tag with name: " + name);
+        return service.create(name);
     }
 
-
-    @GetMapping("/{id}/edit")
-    public Tag edit(@PathVariable("id") int id) {
-        return tagDAO.show(id);
+    @GetMapping()
+    public List<Tag> findAll() {
+        log.info("Controller. Find all tags");
+        return service.findAll();
     }
 
-    @PatchMapping("/{id}")
-    public boolean update(@ModelAttribute("tag") Tag tag,
-                         @PathVariable("id") int id)  {
-        log.info("update");
-        return tagDAO.update(id, tag);
+    @GetMapping("/{id}")
+    public Tag findById(@PathVariable("id") int id) {
+        log.info("Controller. Find tag by id: " + id);
+        return service.findById(id);
     }
 
     @DeleteMapping("/{id}")
     public boolean delete(@PathVariable("id") int id) {
-        log.info("delete");
-        return tagDAO.delete(id);
+        log.info("Controller. Delete tag by id: " + id);
+        return service.delete(id);
     }
 
 

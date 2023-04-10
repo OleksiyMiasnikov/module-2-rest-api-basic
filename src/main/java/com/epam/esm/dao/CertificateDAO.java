@@ -30,7 +30,7 @@ public class CertificateDAO {
 
     public Certificate show(int id){
         return jdbcTemplate.query("SELECT * FROM certificate WHERE id=?",
-                        new Object[]{id},
+                        new Object[]{(Object) id},
                         new BeanPropertyRowMapper<>(Certificate.class))
                 .stream()
                 .findAny()
@@ -42,8 +42,8 @@ public class CertificateDAO {
         jdbcTemplate.update("INSERT INTO certificate VALUES (default, ?, ?, ?, ?, ?, ?)",
                 certificate.getName(),
                 certificate.getDescription(),
-                certificate.getPrice(),
-                certificate.getDuration(),
+                (Object) certificate.getPrice(),
+                (Object) certificate.getDuration(),
                 dateTime,
                 dateTime);
         return certificate;
@@ -59,14 +59,14 @@ public class CertificateDAO {
                         "WHERE id=?",
                 certificate.getName(),
                 certificate.getDescription(),
-                certificate.getPrice(),
-                certificate.getDuration(),
+                (Object) certificate.getPrice(),
+                (Object) certificate.getDuration(),
                 ZonedDateTime.now().toLocalDateTime().toString(),
-                id);
+                (Object) id);
         return true;
     }
 
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM certificate WHERE id=?", id);
+        jdbcTemplate.update("DELETE FROM certificate WHERE id=?", (Object) id);
     }
 }
