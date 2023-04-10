@@ -5,51 +5,62 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
 public class CertificateRepository {
-//    @Resource
-//    @Inject
-//    Injects VS Resource(name = "myBean") VS Autowired VS Qualifier
-//    How to inject prototype to singleton?
-//    Layered
-//    @Controller vs @RestController
-//
+
     private final JdbcTemplate jdbcTemplate;
 
-    public List<Certificate> index() {
+    public int create(Certificate certificate) {
+        log.info("Repository. Create certificate with name: " + certificate.getName());
+        final String SQL = "INSERT INTO certificate VALUES (default, ?, ?, ?, ?, ?, ?)";
+        String dateTime = ZonedDateTime.now().toLocalDateTime().toString();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection
+                    .prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, certificate.getName());
+            ps.setString(2, certificate.getDescription());
+            ps.setDouble(3, certificate.getPrice());
+            ps.setInt(4, certificate.getDuration());
+            ps.setString(5, dateTime);
+            ps.setString(6, dateTime);
+            return ps;
+        }, keyHolder);
+
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
+    }
+
+    public List<Certificate> findAll() {
+        log.info("Repository. Find all certificates");
         return jdbcTemplate.query("SELECT * FROM certificate",
                 new BeanPropertyRowMapper<>(Certificate.class));
     }
 
-    public Certificate show(int id){
+    public Optional<Certificate> findById(int id){
+        log.info("Repository. Find certificate by id: " + id);
         return jdbcTemplate.query("SELECT * FROM certificate WHERE id=?",
                         new Object[]{(Object) id},
                         new BeanPropertyRowMapper<>(Certificate.class))
                 .stream()
-                .findAny()
-                .orElse(null);
+                .findAny();
     }
 
-    public Certificate create(Certificate certificate) {
-        String dateTime = ZonedDateTime.now().toLocalDateTime().toString();
-        jdbcTemplate.update("INSERT INTO certificate VALUES (default, ?, ?, ?, ?, ?, ?)",
-                certificate.getName(),
-                certificate.getDescription(),
-                (Object) certificate.getPrice(),
-                (Object) certificate.getDuration(),
-                dateTime,
-                dateTime);
-        return certificate;
-    }
-
-    public boolean update(int id, Certificate certificate) {
+    public void update(int id, Certificate certificate) {
+        log.info("Repository. Update certificate by id: " + id);
         jdbcTemplate.update("UPDATE certificate " +
                         "SET name=?, " +
                             "description=?, " +
@@ -59,14 +70,16 @@ public class CertificateRepository {
                         "WHERE id=?",
                 certificate.getName(),
                 certificate.getDescription(),
-                (Object) certificate.getPrice(),
-                (Object) certificate.getDuration(),
+                certificate.getPrice(),
+                certificate.getDuration(),
                 ZonedDateTime.now().toLocalDateTime().toString(),
-                (Object) id);
-        return true;
+                id);
     }
 
-    public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM certificate WHERE id=?", (Object) id);
+    public boolean delete(int id) {
+        log.info("Repository. Delete certificate by id: " + id);
+        int result = jdbcTemplate.update("DELETE FROM certificate WHERE id=?", (Object) id);
+        log.info("result of deleting " + result);
+        return result == 1;
     }
 }

@@ -1,67 +1,49 @@
 package com.epam.esm.controllers;
 
-import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.models.Certificate;
+import com.epam.esm.services.CertificateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/certificates")
 @RequiredArgsConstructor
-public class CertificatesController {
+public class CertificatesController extends ModuleController{
 
-    private final CertificateRepository certificateRepository;
+    private final CertificateService service;
+    @PostMapping()
+    public Certificate create(@ModelAttribute("certificate") Certificate certificate) {
+        log.info("Controller. Create certificate with name: " + certificate.getName());
+        return service.create(certificate);
+    }
+
     @GetMapping()
-    public String index(Model model) {
-        model.addAttribute("certificates", certificateRepository.index());
-        return "certificates/index";
+    public List<Certificate> findAll() {
+        log.info("Controller. Find all certificates");
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id,
-                       Model model) {
-        model.addAttribute("certificate", certificateRepository.show(id));
-        return "certificates/show";
-    }
-
-    @GetMapping("/new")
-    public String newCertificate(Model model) {
-        log.info("new certificate");
-        model.addAttribute("certificate", Certificate.builder().build());
-        return "certificates/new";
-    }
-
-    @PostMapping()
-    public String create(@ModelAttribute("certificate") Certificate certificate) {
-        certificateRepository.create(certificate);
-        return "redirect:/certificates";
-    }
-    
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        log.info("to edit page");
-        model.addAttribute("certificate", certificateRepository.show(id));
-        return "certificates/edit";
+    public Certificate findById(@PathVariable("id") int id) {
+        log.info("Controller. Find certificate by id: " + id);
+        return service.findById(id);
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("certificate") Certificate certificate, @PathVariable("id") int id) {
-        log.info("update");
-        if (certificateRepository.update(id, certificate)){
-            return "redirect:/certificates";
-        }
-        return "error";
+    public Certificate update(@PathVariable("id") int id,
+                              @ModelAttribute("certificate") Certificate certificate) {
+        log.info("Controller. Update certificate by id: " + id);
+        return service.update(id, certificate);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        log.info("delete");
-        certificateRepository.delete(id);
-        return "redirect:/certificates";
+    public boolean delete(@PathVariable("id") int id) {
+        log.info("Controller. Delete certificate by id: " + id);
+        return service.delete(id);
     }
 
 }

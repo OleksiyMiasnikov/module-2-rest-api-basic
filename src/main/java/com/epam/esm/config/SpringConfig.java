@@ -1,10 +1,15 @@
 package com.epam.esm.config;
 
+import com.epam.esm.util.ModuleErrorResponse;
+import com.epam.esm.util.ModuleException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -29,4 +34,5 @@ public class SpringConfig implements WebMvcConfigurer {
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
+
 }

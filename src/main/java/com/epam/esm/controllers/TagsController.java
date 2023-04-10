@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tags")
 @RequiredArgsConstructor
-public class TagsController {
+public class TagsController extends ModuleController{
 
     private final TagService service;
 
@@ -43,10 +43,6 @@ public class TagsController {
         log.info("Controller. Delete tag by id: " + id);
         return service.delete(id);
     }
-    @ExceptionHandler
-    private ResponseEntity<ModuleErrorResponse> handleException(ModuleException exception){
-        return new ResponseEntity<>(new ModuleErrorResponse(exception),
-                HttpStatus.NOT_FOUND);
-    }
+
 
 }
