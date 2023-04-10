@@ -49,6 +49,13 @@ public class TagRepository {
                 new BeanPropertyRowMapper<Tag>(Tag.class)).stream().findAny();
     }
 
+    public List<Tag> findByName(String name){
+        log.info("Repository. Find tag by name: " + name);
+        return jdbcTemplate.query("SELECT * FROM tag WHERE name=?",
+                new Object[]{name},
+                new BeanPropertyRowMapper<Tag>(Tag.class));
+    }
+
     public boolean delete(int id) {
         log.info("Repository. Delete tag by id: " + id);
         int result = jdbcTemplate.update("DELETE FROM tag WHERE id=?", (Object) id);

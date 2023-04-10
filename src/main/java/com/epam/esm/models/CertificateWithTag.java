@@ -21,10 +21,8 @@ tag_name
 @AllArgsConstructor
 @Builder
 public class CertificateWithTag {
-    private int tagId;
-    private String tagName;
-    private int certificateId;
-    private String certificateName;
+    private String tag;
+    private String name;
     private String description;
     private double price;
     private int duration;

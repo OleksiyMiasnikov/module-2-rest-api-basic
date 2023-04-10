@@ -34,6 +34,11 @@ public class TagService {
         return result.orElseThrow(() -> new ModuleException("Requested tag is not found (id=" + id + ")", 40401));
     }
 
+    public List<Tag> findByName(String name) {
+        log.info("Service. Find tag by name: " + name);
+        return repo.findByName(name);
+    }
+
     public boolean delete(int id) {
         log.info("Service. Delete tag by id: " + id);
         return repo.delete(id);

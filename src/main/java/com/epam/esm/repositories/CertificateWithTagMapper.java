@@ -13,15 +13,13 @@ public class CertificateWithTagMapper implements RowMapper<CertificateWithTag> {
     public CertificateWithTag mapRow(ResultSet rs, int rowNum) throws SQLException {
         //log.info("Mapper loaded");
         return CertificateWithTag.builder()
-                .tagId(rs.getInt("tag_id"))
-                .certificateId(rs.getInt("certificate_id"))
-                .certificateName(rs.getString("certificate_name"))
+                .name(rs.getString("certificate_name"))
                 .description(rs.getString("description"))
                 .price(rs.getDouble("price"))
                 .duration(rs.getInt("duration"))
                 .createDate(rs.getString("create_date"))
                 .lastUpdateDate(rs.getString("last_update_date"))
-                .tagName(rs.getString("tag_name"))
+                .tag(rs.getString("tag_name"))
                 .build();
     }
 }

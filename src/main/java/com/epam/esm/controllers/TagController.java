@@ -2,12 +2,8 @@ package com.epam.esm.controllers;
 
 import com.epam.esm.models.Tag;
 import com.epam.esm.services.TagService;
-import com.epam.esm.util.ModuleErrorResponse;
-import com.epam.esm.util.ModuleException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tags")
 @RequiredArgsConstructor
-public class TagsController extends ModuleController{
+public class TagController extends ModuleController{
 
     private final TagService service;
 
@@ -36,6 +32,12 @@ public class TagsController extends ModuleController{
     public Tag findById(@PathVariable("id") int id) {
         log.info("Controller. Find tag by id: " + id);
         return service.findById(id);
+    }
+
+    @GetMapping("/name/{name}")
+    public List<Tag> findByName(@PathVariable("name") String name) {
+        log.info("Controller. Find tag by name: " + name);
+        return service.findByName(name);
     }
 
     @DeleteMapping("/{id}")

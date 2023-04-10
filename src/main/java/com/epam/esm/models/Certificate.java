@@ -17,4 +17,13 @@ public class Certificate {
     private Integer duration;
     private String createDate;
     private String lastUpdateDate;
+
+    public static Certificate mapper(CertificateWithTag certificateWithTag) {
+        return Certificate.builder()
+                .name(certificateWithTag.getName())
+                .description(certificateWithTag.getDescription())
+                .price(certificateWithTag.getPrice())
+                .duration(certificateWithTag.getDuration())
+                .build();
+    }
 }
