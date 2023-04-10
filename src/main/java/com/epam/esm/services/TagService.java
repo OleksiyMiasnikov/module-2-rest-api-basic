@@ -31,7 +31,7 @@ public class TagService {
     public Tag findById(int id) {
         log.info("Service. Find tag by id: " + id);
         Optional<Tag> result = repo.findById(id);
-        return result.orElseThrow(() -> new ModuleException("Requested tag is not found (id=" + id + ")", 40401));
+        return result.orElseThrow(() -> new ModuleException("Requested tag is not found (id=" + id + ")", "40401"));
     }
 
     public List<Tag> findByName(String name) {

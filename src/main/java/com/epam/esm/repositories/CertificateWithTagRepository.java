@@ -3,11 +3,9 @@ package com.epam.esm.repositories;
 import com.epam.esm.models.CertificateWithTag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,7 +50,7 @@ public class CertificateWithTagRepository {
                 new CertificateWithTagMapper());
     }
 
-    public List<CertificateWithTag> showByTagName(String name) {
+    public List<CertificateWithTag> findByTagName(String name) {
         log.info("Repository. Find all certificates with tag: " + name);
         return jdbcTemplate.query("SELECT * FROM (" + JOIN_SQL + ") all_tb WHERE all_tb.tag_name=?",
                         new Object[]{name},

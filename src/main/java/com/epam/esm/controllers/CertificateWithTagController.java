@@ -1,6 +1,5 @@
 package com.epam.esm.controllers;
 
-import com.epam.esm.models.Certificate;
 import com.epam.esm.models.CertificateWithTag;
 import com.epam.esm.services.CertificateWithTagService;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +32,6 @@ public class CertificateWithTagController extends ModuleController{
     @GetMapping("/tag/{name}")
     public List<CertificateWithTag> showByTagName(@PathVariable("name") String name) {
         log.info("Controller. Find all certificates with tag: " + name);
-        return service.showByTagName(name);
+        return service.findByTagName(name);
     }
 }

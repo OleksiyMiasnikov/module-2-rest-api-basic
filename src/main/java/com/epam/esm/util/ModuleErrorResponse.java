@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ModuleErrorResponse {
     private String errorMessage;
-    private int errorCode;
+    private String errorCode;
 
     public ModuleErrorResponse(ModuleException exception){
         this.errorMessage = exception.getErrorMessage();
