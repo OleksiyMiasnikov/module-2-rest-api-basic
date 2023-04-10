@@ -12,11 +12,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/certificates")
 @RequiredArgsConstructor
-public class CertificatesController extends ModuleController{
+public class CertificateController extends ModuleController{
 
     private final CertificateService service;
     @PostMapping()
-    public Certificate create(@ModelAttribute("certificate") Certificate certificate) {
+    public Certificate create(@ModelAttribute Certificate certificate) {
         log.info("Controller. Create certificate with name: " + certificate.getName());
         return service.create(certificate);
     }
@@ -35,7 +35,7 @@ public class CertificatesController extends ModuleController{
 
     @PatchMapping("/{id}")
     public Certificate update(@PathVariable("id") int id,
-                              @ModelAttribute("certificate") Certificate certificate) {
+                              @ModelAttribute Certificate certificate) {
         log.info("Controller. Update certificate by id: " + id);
         return service.update(id, certificate);
     }
