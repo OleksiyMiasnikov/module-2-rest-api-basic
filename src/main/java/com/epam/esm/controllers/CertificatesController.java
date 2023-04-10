@@ -1,13 +1,12 @@
 package com.epam.esm.controllers;
 
-import com.epam.esm.dao.CertificateDAO;
+import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.models.Certificate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Slf4j
 @Controller
@@ -15,17 +14,17 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @RequiredArgsConstructor
 public class CertificatesController {
 
-    private final CertificateDAO certificateDAO;
+    private final CertificateRepository certificateRepository;
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("certificates", certificateDAO.index());
+        model.addAttribute("certificates", certificateRepository.index());
         return "certificates/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id,
                        Model model) {
-        model.addAttribute("certificate", certificateDAO.show(id));
+        model.addAttribute("certificate", certificateRepository.show(id));
         return "certificates/show";
     }
 
@@ -38,21 +37,21 @@ public class CertificatesController {
 
     @PostMapping()
     public String create(@ModelAttribute("certificate") Certificate certificate) {
-        certificateDAO.create(certificate);
+        certificateRepository.create(certificate);
         return "redirect:/certificates";
     }
     
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") int id) {
         log.info("to edit page");
-        model.addAttribute("certificate", certificateDAO.show(id));
+        model.addAttribute("certificate", certificateRepository.show(id));
         return "certificates/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("certificate") Certificate certificate, @PathVariable("id") int id) {
         log.info("update");
-        if (certificateDAO.update(id, certificate)){
+        if (certificateRepository.update(id, certificate)){
             return "redirect:/certificates";
         }
         return "error";
@@ -61,7 +60,7 @@ public class CertificatesController {
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") int id) {
         log.info("delete");
-        certificateDAO.delete(id);
+        certificateRepository.delete(id);
         return "redirect:/certificates";
     }
 

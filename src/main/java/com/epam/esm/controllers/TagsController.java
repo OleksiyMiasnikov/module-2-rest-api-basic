@@ -2,8 +2,12 @@ package com.epam.esm.controllers;
 
 import com.epam.esm.models.Tag;
 import com.epam.esm.services.TagService;
+import com.epam.esm.util.ModuleErrorResponse;
+import com.epam.esm.util.ModuleException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +43,10 @@ public class TagsController {
         log.info("Controller. Delete tag by id: " + id);
         return service.delete(id);
     }
-
+    @ExceptionHandler
+    private ResponseEntity<ModuleErrorResponse> handleException(ModuleException exception){
+        return new ResponseEntity<>(new ModuleErrorResponse(exception),
+                HttpStatus.NOT_FOUND);
+    }
 
 }

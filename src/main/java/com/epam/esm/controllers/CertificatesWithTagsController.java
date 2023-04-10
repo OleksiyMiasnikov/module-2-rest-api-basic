@@ -1,10 +1,8 @@
 package com.epam.esm.controllers;
 
-import com.epam.esm.dao.CertificateWithTagDAO;
-import com.epam.esm.models.Certificate;
+import com.epam.esm.repositories.CertificateWithTagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class CertificatesWithTagsController {
 
-    private final CertificateWithTagDAO dao;
+    private final CertificateWithTagRepository dao;
 
     @GetMapping()
     public String index(Model model) {

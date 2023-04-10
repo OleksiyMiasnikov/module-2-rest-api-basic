@@ -1,9 +1,8 @@
-package com.epam.esm.dao;
+package com.epam.esm.repositories;
 
 import com.epam.esm.models.CertificateWithTag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,7 +12,7 @@ import java.util.List;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class CertificateWithTagDAO {
+public class CertificateWithTagRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final String JOIN_SQL =

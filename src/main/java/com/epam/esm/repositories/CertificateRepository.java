@@ -1,4 +1,4 @@
-package com.epam.esm.dao;
+package com.epam.esm.repositories;
 
 import com.epam.esm.models.Certificate;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class CertificateDAO {
+public class CertificateRepository {
 //    @Resource
 //    @Inject
 //    Injects VS Resource(name = "myBean") VS Autowired VS Qualifier

@@ -1,4 +1,4 @@
-package com.epam.esm.dao;
+package com.epam.esm.repositories;
 
 import com.epam.esm.models.Tag;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +13,17 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
 @RequiredArgsConstructor
-public class TagDAO {
+public class TagRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public Tag create(String name) {
-        log.info("DAO. Create tag with name: " + name);
+    public int create(String name) {
+        log.info("Repository. Create tag with name: " + name);
         final String SQL = "INSERT INTO tag VALUES (default, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
@@ -33,26 +34,23 @@ public class TagDAO {
             return ps;
         }, keyHolder);
 
-        return findById(keyHolder.getKey().intValue());
+        return keyHolder.getKey().intValue();
     }
 
     public List<Tag> findAll() {
-        log.info("DAO. Find all tags");
+        log.info("Repository. Find all tags");
         return jdbcTemplate.query("SELECT * FROM tag", new BeanPropertyRowMapper<>(Tag.class));
     }
 
-    public Tag findById(int id){
-        log.info("DAO. Find tag by id: " + id);
+    public Optional<Tag> findById(int id){
+        log.info("Repository. Find tag by id: " + id);
         return jdbcTemplate.query("SELECT * FROM tag WHERE id=?",
                 new Object[]{(Object) id},
-                new BeanPropertyRowMapper<>(Tag.class))
-                .stream()
-                .findAny()
-                .orElse(null);
+                new BeanPropertyRowMapper<Tag>(Tag.class)).stream().findAny();
     }
 
     public boolean delete(int id) {
-        log.info("DAO. Delete tag by id: " + id);
+        log.info("Repository. Delete tag by id: " + id);
         int result = jdbcTemplate.update("DELETE FROM tag WHERE id=?", (Object) id);
         log.info("result of deleting " + result);
         return result == 1;

@@ -1,4 +1,4 @@
-package com.epam.esm.dao;
+package com.epam.esm.repositories;
 
 import com.epam.esm.models.CertificateWithTag;
 import lombok.extern.slf4j.Slf4j;
