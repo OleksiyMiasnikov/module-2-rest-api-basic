@@ -14,7 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/certificates_with_tags")
 @RequiredArgsConstructor
-public class CertificateWithTagController {
+public class CertificateWithTagController extends ModuleController{
 
     private final CertificateWithTagService service;
 
