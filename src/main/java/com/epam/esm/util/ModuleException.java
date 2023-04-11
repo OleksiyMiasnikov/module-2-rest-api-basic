@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @AllArgsConstructor
 public class ModuleException extends RuntimeException{
-    private String errorMessage;
+    private String message;
     private String errorCode;
 }
 

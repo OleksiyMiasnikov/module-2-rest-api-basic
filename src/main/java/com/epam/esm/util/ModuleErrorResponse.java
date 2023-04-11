@@ -12,7 +12,7 @@ public class ModuleErrorResponse {
     private String errorCode;
 
     public ModuleErrorResponse(ModuleException exception){
-        this.errorMessage = exception.getErrorMessage();
+        this.errorMessage = exception.getMessage();
         this.errorCode = exception.getErrorCode();
     }
 }
