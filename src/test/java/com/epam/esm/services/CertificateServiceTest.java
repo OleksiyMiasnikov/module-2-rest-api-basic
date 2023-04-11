@@ -25,6 +25,7 @@ class CertificateServiceTest {
     private CertificateRepository repo;
     @Mock
     private CertificateValidator validator;
+
     private CertificateService subject;
     Certificate certificate;
     int id = 1;
