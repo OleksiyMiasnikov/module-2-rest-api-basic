@@ -1,13 +1,7 @@
 package com.epam.esm.util;
 
 import com.epam.esm.models.Certificate;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.DataBinder;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
-
-import java.util.stream.Collectors;
 
 @Component
 public class CertificateValidator{
@@ -15,11 +9,11 @@ public class CertificateValidator{
     public void validate(Certificate certificate) {
         StringBuilder allErrors = new StringBuilder();
         StringBuilder allCodes = new StringBuilder();
-        if ((certificate.getName() == null) || (certificate.getName().isBlank())) {
+        if ((certificate.getName() == null) || (certificate.getName().isEmpty())) {
             allErrors.append("Field 'name' can not be empty! ; ");
             allCodes.append("40411 ; ");
         }
-        if ((certificate.getDescription() == null) || (certificate.getDescription().isBlank())) {
+        if ((certificate.getDescription() == null) || (certificate.getDescription().isEmpty())) {
             allErrors.append("Field 'description' can not be empty! ; ");
             allCodes.append("40412 ; ");
         }
@@ -32,8 +26,8 @@ public class CertificateValidator{
             allCodes.append("40414 ; ");
         }
         if (!(allErrors.length() == 0)) {
-            throw new ModuleException(allErrors.substring(0, allErrors.length() - 3).toString(),
-                    allCodes.substring(0, allCodes.length() - 3).toString());
+            throw new ModuleException(allErrors.substring(0, allErrors.length() - 3),
+                    allCodes.substring(0, allCodes.length() - 3));
         }
     }
 }

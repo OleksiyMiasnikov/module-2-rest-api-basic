@@ -7,11 +7,10 @@ import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.repositories.CertificateWithTagRepository;
 import com.epam.esm.repositories.TagRepository;
 import com.epam.esm.util.CertificateWithTagValidator;
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.util.SortingValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -24,12 +23,13 @@ public class CertificateWithTagService{
     private final TagRepository tagRepo;
     private final CertificateRepository certificateRepo;
     private final CertificateWithTagValidator validator;
+    private final SortingValidator sortingValidator;
 
     public CertificateWithTag create(CertificateWithTag certificateWithTag) {
         log.info("Service. Create certificate with tag and name: " + certificateWithTag.getName());
         validator.validate(certificateWithTag);
 
-        int tagId = 0;
+        int tagId;
         List<Tag> tagList = tagRepo.findByName(certificateWithTag.getTag());
         if (tagList.size() == 0) {
             tagId = tagRepo.create(certificateWithTag.getTag());
@@ -42,14 +42,22 @@ public class CertificateWithTagService{
         return repo.findByTagIdAndCertificateId(tagId, certificateId).orElse(null);
     }
 
-    public List<CertificateWithTag> findAll() {
+    public List<CertificateWithTag> findAll(String sortByName, String sortByDate) {
         log.info("Controller. Find all certificates with tags");
-        return repo.findAll();
+        // validate sorting parameters
+        sortingValidator.validate(sortByDate);
+        sortingValidator.validate(sortByName);
+
+        return repo.findAll(sortByName, sortByDate);
     }
 
-    public List<CertificateWithTag> findByTagName(String name) {
+    public List<CertificateWithTag> findByTagName(String name, String sortByName, String sortByDate) {
         log.info("Controller. Find all certificates with tag: " + name);
-        return repo.findByTagName(name);
+        // validate sorting parameters
+        sortingValidator.validate(sortByDate);
+        sortingValidator.validate(sortByName);
+
+        return repo.findByTagName(name, sortByName, sortByDate);
     }
 
     public List<CertificateWithTag> findByPartOfNameOrDescription(String pattern) {

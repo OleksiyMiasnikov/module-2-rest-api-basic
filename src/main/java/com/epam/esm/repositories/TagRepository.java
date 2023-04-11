@@ -9,10 +9,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -34,7 +34,7 @@ public class TagRepository {
             return ps;
         }, keyHolder);
 
-        return keyHolder.getKey().intValue();
+        return Objects.requireNonNull(keyHolder.getKey()).intValue();
     }
 
     public List<Tag> findAll() {
@@ -45,20 +45,20 @@ public class TagRepository {
     public Optional<Tag> findById(int id){
         log.info("Repository. Find tag by id: " + id);
         return jdbcTemplate.query("SELECT * FROM tag WHERE id=?",
-                new Object[]{(Object) id},
-                new BeanPropertyRowMapper<Tag>(Tag.class)).stream().findAny();
+                new Object[]{id},
+                new BeanPropertyRowMapper<>(Tag.class)).stream().findAny();
     }
 
     public List<Tag> findByName(String name){
         log.info("Repository. Find tag by name: " + name);
         return jdbcTemplate.query("SELECT * FROM tag WHERE name=?",
                 new Object[]{name},
-                new BeanPropertyRowMapper<Tag>(Tag.class));
+                new BeanPropertyRowMapper<>(Tag.class));
     }
 
     public boolean delete(int id) {
         log.info("Repository. Delete tag by id: " + id);
-        int result = jdbcTemplate.update("DELETE FROM tag WHERE id=?", (Object) id);
+        int result = jdbcTemplate.update("DELETE FROM tag WHERE id=?", id);
         log.info("result of deleting " + result);
         return result == 1;
     }

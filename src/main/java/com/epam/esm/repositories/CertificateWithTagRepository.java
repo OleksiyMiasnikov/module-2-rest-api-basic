@@ -35,7 +35,7 @@ public class CertificateWithTagRepository {
                     "JOIN tag " +
                     "WHERE certificate_with_tag.tag_id = tag.id" +
                  ") tag_tb " +
-            "WHERE tag_tb.certificate_id = certificate.id";
+            "WHERE tag_tb.certificate_id = certificate.id %s";
 
 
     public void create(int tagId, int certificateId){
@@ -44,15 +44,17 @@ public class CertificateWithTagRepository {
                 tagId, certificateId);
     }
 
-    public List<CertificateWithTag> findAll() {
+    public List<CertificateWithTag> findAll(String sortByName, String sortByDate) {
         log.info("Repository. Find all certificates with tags");
-        return jdbcTemplate.query(JOIN_SQL,
+        String sql = String.format(JOIN_SQL, "ORDER by name " + sortByName + ", create_date " + sortByDate);
+        return jdbcTemplate.query(sql,
                 new CertificateWithTagMapper());
     }
 
-    public List<CertificateWithTag> findByTagName(String name) {
+    public List<CertificateWithTag> findByTagName(String name, String sortByName, String sortByDate) {
         log.info("Repository. Find all certificates with tag: " + name);
-        return jdbcTemplate.query("SELECT * FROM (" + JOIN_SQL + ") all_tb WHERE all_tb.tag_name=?",
+        String sql = String.format(JOIN_SQL, "ORDER by name " + sortByName + ", create_date " + sortByDate);
+        return jdbcTemplate.query("SELECT * FROM (" + sql + ") all_tb WHERE all_tb.tag_name=?",
                         new Object[]{name},
                         new CertificateWithTagMapper());
     }

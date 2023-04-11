@@ -53,7 +53,7 @@ public class CertificateRepository {
     public Optional<Certificate> findById(int id){
         log.info("Repository. Find certificate by id: " + id);
         return jdbcTemplate.query("SELECT * FROM certificate WHERE id=?",
-                        new Object[]{(Object) id},
+                        new Object[]{id},
                         new BeanPropertyRowMapper<>(Certificate.class))
                 .stream()
                 .findAny();
@@ -78,7 +78,7 @@ public class CertificateRepository {
 
     public boolean delete(int id) {
         log.info("Repository. Delete certificate by id: " + id);
-        int result = jdbcTemplate.update("DELETE FROM certificate WHERE id=?", (Object) id);
+        int result = jdbcTemplate.update("DELETE FROM certificate WHERE id=?", id);
         log.info("result of deleting " + result);
         return result == 1;
     }
