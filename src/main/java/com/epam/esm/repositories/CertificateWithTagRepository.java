@@ -67,4 +67,11 @@ public class CertificateWithTagRepository {
                 .stream()
                 .findAny();
     }
+
+    public List<CertificateWithTag> findByPartOfNameOrDescription(String pattern) {
+        log.info("Repository. Find certificate by part of name or description");
+        return jdbcTemplate.query("call find_by_part(?)",
+                new Object[]{pattern},
+                new CertificateWithTagMapper());
+    }
 }

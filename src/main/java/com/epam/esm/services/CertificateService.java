@@ -24,25 +24,7 @@ public class CertificateService {
     private final CertificateValidator validator;
     public Certificate create(Certificate certificate) {
         log.info("Service. Create certificate with name: " + certificate.getName());
-
-        final DataBinder dataBinder = new DataBinder(certificate);
-        dataBinder.addValidators(validator);
-        dataBinder.validate();
-        if (dataBinder.getBindingResult().hasErrors()){
-            log.error("Validation error");
-            String allErrors = dataBinder.getBindingResult()
-                    .getAllErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .collect(Collectors.joining("; "));
-            String allCodes = dataBinder.getBindingResult()
-                    .getAllErrors()
-                    .stream()
-                    .map(DefaultMessageSourceResolvable::getCode)
-                    .collect(Collectors.joining("; "));
-
-            throw new ModuleException(allErrors, allCodes);
-        }
+        validator.validate(certificate);
         int result = repo.create(certificate);
         return findById(result);
     }

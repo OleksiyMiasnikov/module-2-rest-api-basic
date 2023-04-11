@@ -1,7 +1,5 @@
 package com.epam.esm.util;
 
-import com.epam.esm.util.ModuleErrorResponse;
-import com.epam.esm.util.ModuleException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

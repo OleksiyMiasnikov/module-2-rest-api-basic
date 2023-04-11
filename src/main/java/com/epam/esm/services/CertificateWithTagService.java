@@ -6,6 +6,7 @@ import com.epam.esm.models.Tag;
 import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.repositories.CertificateWithTagRepository;
 import com.epam.esm.repositories.TagRepository;
+import com.epam.esm.util.CertificateWithTagValidator;
 import com.epam.esm.util.ModuleException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,24 +23,11 @@ public class CertificateWithTagService{
     private final CertificateWithTagRepository repo;
     private final TagRepository tagRepo;
     private final CertificateRepository certificateRepo;
+    private final CertificateWithTagValidator validator;
 
     public CertificateWithTag create(CertificateWithTag certificateWithTag) {
         log.info("Service. Create certificate with tag and name: " + certificateWithTag.getName());
-        if ((certificateWithTag.getTag() == null) || (certificateWithTag.getTag().isBlank())) {
-            throw new ModuleException("Field 'tag' can not be empty!", "40421");
-        }
-//        if ((certificateWithTag.getName() == null) || (certificateWithTag.getName().isBlank())) {
-//            throw new ModuleException("Field 'name' can not be empty!", "40422");
-//        }
-//        if ((certificateWithTag.getDescription() == null) || (certificateWithTag.getDescription().isBlank())) {
-//            throw new ModuleException("Field 'description' can not be empty!", "40423");
-//        }
-//        if ((certificateWithTag.getPrice() == null) || (certificateWithTag.getPrice() <= 0)) {
-//            throw new ModuleException("Field 'price' should be more then 0!", "40424");
-//        }
-//        if ((certificateWithTag.getDuration() == null) || (certificateWithTag.getDuration() <= 0)) {
-//            throw new ModuleException("Field 'duration' should be more then 0!", "40421");
-//        }
+        validator.validate(certificateWithTag);
 
         int tagId = 0;
         List<Tag> tagList = tagRepo.findByName(certificateWithTag.getTag());
@@ -54,15 +42,18 @@ public class CertificateWithTagService{
         return repo.findByTagIdAndCertificateId(tagId, certificateId).orElse(null);
     }
 
-    @GetMapping()
     public List<CertificateWithTag> findAll() {
         log.info("Controller. Find all certificates with tags");
         return repo.findAll();
     }
 
-    @GetMapping("/tag/{name}")
     public List<CertificateWithTag> findByTagName(String name) {
         log.info("Controller. Find all certificates with tag: " + name);
         return repo.findByTagName(name);
+    }
+
+    public List<CertificateWithTag> findByPartOfNameOrDescription(String pattern) {
+        log.info("Controller. Find certificate by part of name or description.");
+        return repo.findByPartOfNameOrDescription(pattern);
     }
 }

@@ -1,32 +1,39 @@
 package com.epam.esm.util;
 
 import com.epam.esm.models.Certificate;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.DataBinder;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-@Component
-public class CertificateValidator implements Validator {
-    @Override
-    public boolean supports(Class<?> clazz) {
-        return Certificate.class.equals(clazz);
-    }
+import java.util.stream.Collectors;
 
-    @Override
-    public void validate(Object target, Errors errors) {
-        Certificate certificate = (Certificate) target;
+@Component
+public class CertificateValidator{
+
+    public void validate(Certificate certificate) {
+        StringBuilder allErrors = new StringBuilder();
+        StringBuilder allCodes = new StringBuilder();
         if ((certificate.getName() == null) || (certificate.getName().isBlank())) {
-            errors.reject("40411", "Field 'name' can not be empty!");
+            allErrors.append("Field 'name' can not be empty! ; ");
+            allCodes.append("40411 ; ");
         }
         if ((certificate.getDescription() == null) || (certificate.getDescription().isBlank())) {
-            errors.reject("40412","Field 'description' can not be empty!");
+            allErrors.append("Field 'description' can not be empty! ; ");
+            allCodes.append("40412 ; ");
         }
         if ((certificate.getPrice() == null) || (certificate.getPrice() <= 0)) {
-            errors.reject("40413","Field 'price' should be more then 0!");
+            allErrors.append("Field 'price' should be more then 0! ; ");
+            allCodes.append("40413 ; ");
         }
         if ((certificate.getDuration() == null) || (certificate.getDuration() <= 0)) {
-            errors.reject("40414","Field 'duration' should be more then 0!");
+            allErrors.append("Field 'duration' should be more then 0! ; ");
+            allCodes.append("40414 ; ");
         }
-
+        if (!(allErrors.length() == 0)) {
+            throw new ModuleException(allErrors.substring(0, allErrors.length() - 3).toString(),
+                    allCodes.substring(0, allCodes.length() - 3).toString());
+        }
     }
 }
