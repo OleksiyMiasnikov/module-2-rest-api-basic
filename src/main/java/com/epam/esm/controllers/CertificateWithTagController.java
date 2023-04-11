@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/certificates_with_tags")
 @RequiredArgsConstructor
-public class CertificateWithTagController extends ModuleController{
+public class CertificateWithTagController{
 
     private final CertificateWithTagService service;
 

@@ -1,5 +1,7 @@
 package com.epam.esm.models;
 
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +17,8 @@ public class Certificate {
     private String name;
     private String description;
     private Double price;
+    @NotNull(message = "asdf")
+    @Min(value = 1, message = "must be more then 0")
     private Integer duration;
     private String createDate;
     private String lastUpdateDate;

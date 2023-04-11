@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tags")
 @RequiredArgsConstructor
-public class TagController extends ModuleController{
+public class TagController{
 
     private final TagService service;
 

@@ -24,6 +24,7 @@ public class CertificateService {
     private final CertificateValidator validator;
     public Certificate create(Certificate certificate) {
         log.info("Service. Create certificate with name: " + certificate.getName());
+
         final DataBinder dataBinder = new DataBinder(certificate);
         dataBinder.addValidators(validator);
         dataBinder.validate();

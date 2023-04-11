@@ -25,20 +25,20 @@ public class CertificateWithTagService{
 
     public CertificateWithTag create(CertificateWithTag certificateWithTag) {
         log.info("Service. Create certificate with tag and name: " + certificateWithTag.getName());
-//        if ((certificateWithTag.getTag() == null) || (certificateWithTag.getTag().isBlank())) {
-//            throw new ModuleException("Field 'tag' can not be empty!", 40421);
-//        }
+        if ((certificateWithTag.getTag() == null) || (certificateWithTag.getTag().isBlank())) {
+            throw new ModuleException("Field 'tag' can not be empty!", "40421");
+        }
 //        if ((certificateWithTag.getName() == null) || (certificateWithTag.getName().isBlank())) {
-//            throw new ModuleException("Field 'name' can not be empty!", 40422);
+//            throw new ModuleException("Field 'name' can not be empty!", "40422");
 //        }
 //        if ((certificateWithTag.getDescription() == null) || (certificateWithTag.getDescription().isBlank())) {
-//            throw new ModuleException("Field 'description' can not be empty!", 40423);
+//            throw new ModuleException("Field 'description' can not be empty!", "40423");
 //        }
-//        if (certificateWithTag.getPrice() <= 0) {
-//            throw new ModuleException("Field 'price' should be more then 0!", 40424);
+//        if ((certificateWithTag.getPrice() == null) || (certificateWithTag.getPrice() <= 0)) {
+//            throw new ModuleException("Field 'price' should be more then 0!", "40424");
 //        }
-//        if (certificateWithTag.getDuration() <= 0) {
-//            throw new ModuleException("Field 'duration' should be more then 0!", 40421);
+//        if ((certificateWithTag.getDuration() == null) || (certificateWithTag.getDuration() <= 0)) {
+//            throw new ModuleException("Field 'duration' should be more then 0!", "40421");
 //        }
 
         int tagId = 0;

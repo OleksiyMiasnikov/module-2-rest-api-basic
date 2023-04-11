@@ -28,6 +28,5 @@ public class CertificateValidator implements Validator {
             errors.reject("40414","Field 'duration' should be more then 0!");
         }
 
-
     }
 }

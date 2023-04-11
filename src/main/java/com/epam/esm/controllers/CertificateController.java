@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/certificates")
 @RequiredArgsConstructor
-public class CertificateController extends ModuleController{
+public class CertificateController{
 
     private final CertificateService service;
     @PostMapping()
