@@ -2,12 +2,11 @@ package com.epam.esm.controllers;
 
 import com.epam.esm.models.Certificate;
 import com.epam.esm.services.CertificateService;
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.exceptions.ModuleException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

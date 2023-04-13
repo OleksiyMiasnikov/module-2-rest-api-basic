@@ -2,7 +2,6 @@ package com.epam.esm.validators;
 
 import com.epam.esm.models.Certificate;
 import com.epam.esm.models.CertificateWithTag;
-import com.epam.esm.util.ModuleException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

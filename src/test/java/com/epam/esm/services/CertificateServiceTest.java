@@ -3,14 +3,12 @@ package com.epam.esm.services;
 import com.epam.esm.models.Certificate;
 import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.validators.CertificateValidator;
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.exceptions.ModuleException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 
 import java.util.List;
 import java.util.Optional;

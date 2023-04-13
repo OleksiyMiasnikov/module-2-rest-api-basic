@@ -1,7 +1,6 @@
 package com.epam.esm.validators;
 
 import com.epam.esm.models.Certificate;
-import com.epam.esm.util.ModuleException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;

@@ -2,7 +2,7 @@ package com.epam.esm.services;
 
 import com.epam.esm.repositories.TagRepository;
 import com.epam.esm.models.Tag;
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.exceptions.ModuleException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

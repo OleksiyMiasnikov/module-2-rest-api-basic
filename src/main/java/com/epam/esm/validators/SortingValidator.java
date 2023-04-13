@@ -1,6 +1,6 @@
 package com.epam.esm.validators;
 
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.exceptions.ModuleException;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -6,12 +6,13 @@ import com.epam.esm.models.Tag;
 import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.repositories.CertificateWithTagRepository;
 import com.epam.esm.repositories.TagRepository;
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.exceptions.ModuleException;
 import com.epam.esm.validators.CertificateWithTagValidator;
 import com.epam.esm.validators.SortingValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 
@@ -38,6 +39,7 @@ public class CertificateWithTagService{
      * @param certificateWithTag - certificate with tag
      * @return {@link CertificateWithTag} created tag
      */
+    @Transactional
     public CertificateWithTag create(CertificateWithTag certificateWithTag) {
         log.info("Service. Create certificate with tag and name: " + certificateWithTag.getName());
 
@@ -61,8 +63,8 @@ public class CertificateWithTagService{
         }
 
         int certificateId = certificateRepo.create(Certificate.mapper(certificateWithTag));
-
         repo.create(tagId, certificateId);
+
         return repo.findByTagIdAndCertificateId(tagId, certificateId).orElse(null);
     }
 

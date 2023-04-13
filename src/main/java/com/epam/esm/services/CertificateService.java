@@ -3,15 +3,15 @@ package com.epam.esm.services;
 import com.epam.esm.models.Certificate;
 import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.validators.CertificateValidator;
-import com.epam.esm.util.ModuleException;
+import com.epam.esm.exceptions.ModuleException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  *  A service to work with {@link Certificate}.
@@ -76,6 +76,7 @@ public class CertificateService {
      * @param certificate fields to update
      * @return {@link Certificate} updated certificate
      */
+    @Transactional
     public Certificate update(int id, Certificate certificate) {
         log.info("Service. Update certificate by id: " + id);
         Certificate oldCertificate = findById(id);
