@@ -1,15 +1,17 @@
 package com.epam.esm.services;
 
 import com.epam.esm.models.Certificate;
-import com.epam.esm.models.Tag;
 import com.epam.esm.repositories.CertificateRepository;
-import com.epam.esm.util.CertificateValidator;
+import com.epam.esm.validators.CertificateValidator;
 import com.epam.esm.util.ModuleException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  *  A service to work with {@link Certificate}.
@@ -30,7 +32,15 @@ public class CertificateService {
      */
     public Certificate create(Certificate certificate) {
         log.info("Service. Create certificate with name: " + certificate.getName());
-        validator.validate(certificate);
+
+        DataBinder binder = new DataBinder(certificate);
+        binder.setValidator(validator);
+        binder.validate();
+        BindingResult bindingResult = binder.getBindingResult();
+        if (bindingResult.hasErrors()) {
+            throw new ModuleException(bindingResult);
+        }
+
         int result = repo.create(certificate);
         return findById(result);
     }

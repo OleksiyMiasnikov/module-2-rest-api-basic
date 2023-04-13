@@ -27,7 +27,7 @@ public class CertificateWithTagController{
     public List<CertificateWithTag> findAll(@ModelAttribute("sort_by_name") String sortByName,
                                             @ModelAttribute("sort_by_date") String sortByDate) {
         log.info("Controller. Find all certificates with tags");
-        return service.findAll(sortByName, sortByDate);
+        return service.findAll(sortByName.toUpperCase(), sortByDate.toUpperCase());
     }
 
     @GetMapping("/tag/{name}")
@@ -35,7 +35,7 @@ public class CertificateWithTagController{
                                                   @ModelAttribute("sort_by_name") String sortByName,
                                                   @ModelAttribute("sort_by_date") String sortByDate) {
         log.info("Controller. Find all certificates with tag: " + name);
-        return service.findByTagName(name, sortByName, sortByDate);
+        return service.findByTagName(name, sortByName.toUpperCase(), sortByDate.toUpperCase());
     }
 
     @GetMapping("/search/{pattern}")

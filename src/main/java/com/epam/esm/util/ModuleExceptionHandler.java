@@ -13,17 +13,21 @@ public class ModuleExceptionHandler {
     @ExceptionHandler
     private ResponseEntity<ModuleErrorResponse> handleException(ModuleException exception){
         return new ResponseEntity<>(new ModuleErrorResponse(exception),
-                HttpStatus.NOT_FOUND);
+                HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler
     private ResponseEntity<ModuleErrorResponse> handleException(NumberFormatException exception){
-        return new ResponseEntity<>(new ModuleErrorResponse("Incorrect value", "40002"),
+        return new ResponseEntity<>(new ModuleErrorResponse(
+                "Incorrect value",
+                "40002"),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler
     private ResponseEntity<ModuleErrorResponse> handleException(SQLException exception){
-        return new ResponseEntity<>(new ModuleErrorResponse("Database error!", "50001"),
+        return new ResponseEntity<>(new ModuleErrorResponse(
+                "Database error!",
+                "50001"),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

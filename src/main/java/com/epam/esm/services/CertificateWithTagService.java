@@ -6,11 +6,14 @@ import com.epam.esm.models.Tag;
 import com.epam.esm.repositories.CertificateRepository;
 import com.epam.esm.repositories.CertificateWithTagRepository;
 import com.epam.esm.repositories.TagRepository;
-import com.epam.esm.util.CertificateWithTagValidator;
-import com.epam.esm.util.SortingValidator;
+import com.epam.esm.util.ModuleException;
+import com.epam.esm.validators.CertificateWithTagValidator;
+import com.epam.esm.validators.SortingValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.DataBinder;
 
 import java.util.List;
 
@@ -38,7 +41,14 @@ public class CertificateWithTagService{
     public CertificateWithTag create(CertificateWithTag certificateWithTag) {
         log.info("Service. Create certificate with tag and name: " + certificateWithTag.getName());
 
-        validator.validate(certificateWithTag);
+        // validation certificateWithTag
+        DataBinder binder = new DataBinder(certificateWithTag);
+        binder.setValidator(validator);
+        binder.validate();
+        BindingResult bindingResult = binder.getBindingResult();
+        if (bindingResult.hasErrors()) {
+            throw new ModuleException(bindingResult);
+        }
 
         // if tag exists in the database, tagId get from database
         // else a new tag will be created with new tagId
@@ -67,6 +77,7 @@ public class CertificateWithTagService{
     public List<CertificateWithTag> findAll(String sortByName, String sortByDate) {
         log.info("Controller. Find all certificates with tags");
         // validate sorting parameters
+
         sortingValidator.validate(sortByDate);
         sortingValidator.validate(sortByName);
 

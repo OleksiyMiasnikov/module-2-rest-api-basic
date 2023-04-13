@@ -11,6 +11,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -23,12 +24,10 @@ public class CertificateController{
     public Certificate create(@ModelAttribute("certificate") @Valid Certificate certificate,
                               BindingResult bindingResult) {
         log.info("Controller. Create certificate with name: " + certificate.getName());
-        log.info("BindingResult has errors: " + bindingResult.hasErrors());
-        for(Object error: bindingResult.getAllErrors()){
-            if(error instanceof FieldError) {
-                FieldError fieldError = (FieldError) error;
-                throw new ModuleException("400", ((FieldError) error).getDefaultMessage());
-            }
+        if (bindingResult.hasErrors()) {
+            throw new ModuleException(Objects.requireNonNull(bindingResult.getFieldError())
+                            .getDefaultMessage(),
+                    "400001");
         }
         return service.create(certificate);
     }

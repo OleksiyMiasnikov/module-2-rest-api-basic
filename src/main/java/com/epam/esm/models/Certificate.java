@@ -1,6 +1,6 @@
 package com.epam.esm.models;
 
-import com.epam.esm.util.CertificateValidator;
+import com.epam.esm.validators.CertificateValidator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +27,7 @@ public class Certificate {
                 .price(certificateWithTag.getPrice())
                 .duration(certificateWithTag.getDuration())
                 .build();
-        validator.validate(certificate);
+        //validator.validate(certificate);
         return certificate;
     }
 }

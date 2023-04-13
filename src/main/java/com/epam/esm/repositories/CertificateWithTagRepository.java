@@ -61,8 +61,9 @@ public class CertificateWithTagRepository {
 
     public Optional<CertificateWithTag> findByTagIdAndCertificateId(Integer tagId, Integer certificateId) {
         log.info("Repository. Find certificate by tagId and certificateId");
+        String sql = String.format(JOIN_SQL, "");
         return jdbcTemplate.query("SELECT * FROM (" +
-                        JOIN_SQL +
+                        sql +
                         ") all_tb WHERE all_tb.tag_id=? AND all_tb.certificate_id=?",
                 new Object[]{tagId, certificateId},
                 new CertificateWithTagMapper())

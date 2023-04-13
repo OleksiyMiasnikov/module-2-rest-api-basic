@@ -1,9 +1,10 @@
-package com.epam.esm.util;
+package com.epam.esm.validators;
 
+import com.epam.esm.util.ModuleException;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SortingValidator {
+public class SortingValidator  {
     public void validate(String sort){
         if (sort == null || sort.isEmpty()) return;
         if (!sort.equals("ASC") && !sort.equals("DESC")) {
