@@ -2,8 +2,12 @@ package com.epam.esm.controllers;
 
 import com.epam.esm.models.Certificate;
 import com.epam.esm.services.CertificateService;
+import com.epam.esm.util.ModuleException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +20,16 @@ public class CertificateController{
 
     private final CertificateService service;
     @PostMapping()
-    public Certificate create(@ModelAttribute Certificate certificate) {
+    public Certificate create(@ModelAttribute("certificate") @Valid Certificate certificate,
+                              BindingResult bindingResult) {
         log.info("Controller. Create certificate with name: " + certificate.getName());
+        log.info("BindingResult has errors: " + bindingResult.hasErrors());
+        for(Object error: bindingResult.getAllErrors()){
+            if(error instanceof FieldError) {
+                FieldError fieldError = (FieldError) error;
+                throw new ModuleException("400", ((FieldError) error).getDefaultMessage());
+            }
+        }
         return service.create(certificate);
     }
 
