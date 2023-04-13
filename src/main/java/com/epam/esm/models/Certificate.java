@@ -1,10 +1,11 @@
 package com.epam.esm.models;
 
-import com.epam.esm.validators.CertificateValidator;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -20,14 +21,24 @@ public class Certificate {
     private String lastUpdateDate;
 
     public static Certificate mapper(CertificateWithTag certificateWithTag) {
-        CertificateValidator validator = new CertificateValidator();
-        Certificate certificate = Certificate.builder()
+        return Certificate.builder()
                 .name(certificateWithTag.getName())
                 .description(certificateWithTag.getDescription())
                 .price(certificateWithTag.getPrice())
                 .duration(certificateWithTag.getDuration())
                 .build();
-        //validator.validate(certificate);
-        return certificate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Certificate that = (Certificate) o;
+        return id == that.id && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(price, that.price) && Objects.equals(duration, that.duration);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, duration);
     }
 }
