@@ -28,7 +28,6 @@ class CertificateWithTagServiceTest {
     TagRepository tagRepo;
     @Mock
     CertificateRepository certificateRepo;
-    @Mock
     CertificateWithTagValidator validator;
     @Mock
     SortingValidator sortingValidator;
@@ -49,8 +48,8 @@ class CertificateWithTagServiceTest {
                 .description("description of certificate 1")
                 .price(100.50)
                 .duration(7)
-                .createDate("")
-                .lastUpdateDate("")
+                .createDate("2023-04-13 14:56:06")
+                .lastUpdateDate("2023-04-13 14:56:06")
                 .build();
     }
 
@@ -66,7 +65,6 @@ class CertificateWithTagServiceTest {
         when(repo.findByTagIdAndCertificateId(tag.getId(), certificateId))
                 .thenReturn(Optional.of(certificateWithTag));
         assertThat(subject.create(certificateWithTag)).isEqualTo(certificateWithTag);
-        //verify(validator).validate(certificateWithTag);
         verify(repo).create(tag.getId(), certificateId);
     }
 
