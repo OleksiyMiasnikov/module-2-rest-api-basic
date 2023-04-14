@@ -1,12 +1,16 @@
 package com.epam.esm.controllers;
 
+import com.epam.esm.exceptions.ModuleException;
 import com.epam.esm.models.CertificateWithTag;
 import com.epam.esm.services.CertificateWithTagService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -17,9 +21,15 @@ public class CertificateWithTagController{
     private final CertificateWithTagService service;
 
     @PostMapping()
-    public CertificateWithTag create(@ModelAttribute CertificateWithTag certificateWithTag) {
+    public CertificateWithTag create(@ModelAttribute @Valid CertificateWithTag certificateWithTag,
+                                     BindingResult bindingResult) {
         log.info("Controller. Create certificate with tag and name: "
                 + certificateWithTag.getName());
+        if (bindingResult.hasErrors()) {
+            throw new ModuleException(Objects.requireNonNull(bindingResult.getFieldError())
+                    .getDefaultMessage(),
+                    "400001");
+        }
         return service.create(certificateWithTag);
     }
 

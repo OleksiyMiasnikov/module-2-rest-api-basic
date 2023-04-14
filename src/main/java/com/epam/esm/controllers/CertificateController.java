@@ -45,8 +45,14 @@ public class CertificateController{
 
     @PatchMapping("/{id}")
     public Certificate update(@PathVariable("id") int id,
-                              @ModelAttribute Certificate certificate) {
+                              @ModelAttribute @Valid Certificate certificate,
+                              BindingResult bindingResult) {
         log.info("Controller. Update certificate by id: " + id);
+        if (bindingResult.hasErrors()) {
+            throw new ModuleException(Objects.requireNonNull(bindingResult.getFieldError())
+                    .getDefaultMessage(),
+                    "400001");
+        }
         return service.update(id, certificate);
     }
 

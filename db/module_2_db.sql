@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `module_2_db`.`certificate` (
   `description` VARCHAR(100) NULL,
   `price` DECIMAL(10,2) UNSIGNED NULL,
   `duration` DECIMAL(10) UNSIGNED NULL,
-  `create_date` DATETIME NULL,
-  `last_update_date` DATETIME NULL,
+  `create_date` VARCHAR(45) NULL,
+  `last_update_date` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
