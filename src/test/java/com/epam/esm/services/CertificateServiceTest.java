@@ -125,8 +125,11 @@ class CertificateServiceTest {
                 .lastUpdateDate("")
                 .build();
         when(repo.findById(id)).thenReturn(Optional.of(certificate), Optional.of(certificate3));
+
         Certificate result = subject.update(id, certificate2);
+
         verify(repo).update(id, certificate3);
+
         assertThat(result).isEqualTo(certificate3);
     }
 

@@ -20,7 +20,7 @@ public class CertificateController{
 
     private final CertificateService service;
     @PostMapping()
-    public Certificate create(@ModelAttribute("certificate") @Valid Certificate certificate,
+    public Certificate create(@Valid @RequestBody Certificate certificate,
                               BindingResult bindingResult) {
         log.info("Controller. Create certificate with name: " + certificate.getName());
         if (bindingResult.hasErrors()) {
